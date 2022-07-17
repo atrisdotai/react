@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Button from '../../lib/button';
+import Button from '../../../lib/button';
 
 export interface CometButtonProps {
   children: React.ReactChildren,

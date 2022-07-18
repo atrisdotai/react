@@ -1,30 +1,66 @@
 # @comet-labs/react
 
-> Made with create-react-library
+## About
 
-[![NPM](https://img.shields.io/npm/v/@comet-labs/react.svg)](https://www.npmjs.com/package/@comet-labs/react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+Integrate [Comet](https://withcomet.com)'s Instant Wallet into your React app in 1 line of code.
 
-## Install
+**Note: This is a very early release of Comet's React library and APIs are subject to change.**
 
-```bash
+## Installation
+
+### npm
+```
 npm install --save @comet-labs/react
+```
+
+### yarn
+```
+yarn add @comet-labs/react
 ```
 
 ## Usage
 
-```tsx
-import React, { Component } from 'react'
+```javascript
+import React from 'react';
+import { CometButton } from '@comet-labs/react';
 
-import MyComponent from '@comet-labs/react'
-import '@comet-labs/react/dist/index.css'
+// Import CSS to apply styles
+import '@comet-labs/react/dist/index.css';
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
+export default function MyApp(props) {
+  // Login handler
+  const loginHandler = (result) => {
+    alert(`Logged in as @${result.username}! Address: ${result.address.address}`);
   }
+
+  return (
+    ...
+    <CometButton
+      action="login"
+      onSuccess={loginHandler}
+    />
+    ...
+  );
 }
 ```
 
-## License
+### API
+`CometButton` accepts the following props:
 
-ISC © [aniiyengar](https://github.com/aniiyengar)
+| Prop | Required | Description |
+| --- | --- | --- |
+| `action` | :heavy_check_mark: | The action that occurs when the button is clicked. Currently the only accepted action is `login`. |
+| `onSuccess` | :heavy_check_mark: | Handler function after the login is done. Contains fields for the user's `id`, `username`, and data about their `address`. |
+| `chainType`, `chainId` | | Specify `chainType` and `chainId` to specify which blockchain to login with. The currently available `chainType`s and `chainId`s are listed below. |
+
+### Supported chains
+By default, Comet generates a wallet on **Solana mainnet**. To generate wallets on other chains, supply the `chainType` and `chainId` props to `CometButton`. The supported chains are listed below:
+
+| Blockchain | `chainType` | `chainId` |
+| --- | --- | --- |
+| Solana mainnet | `solana` | 101 |
+| Solana devnet | `solana` | 103 |
+| Ethereum mainnet | `evm` | 1 |
+| Rinkeby testnet | `evm` | 4 |
+| Polygon mainnet | `evm` | 137 |
+| Mumbai testnet | `evm` | 80001 |

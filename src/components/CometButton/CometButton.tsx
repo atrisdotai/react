@@ -68,16 +68,19 @@ export default (props: CometButtonProps) => {
     throw new Error('Must supply a valid integer "chainId".');
   }
 
+  const messageHandler = (e: any) => {
+    const { type, value } = e.data || e.message;
+    if (type === 'cometsdk_contentHeight') {
+      setIframeHeight(value);
+    } else if (type === 'cometsdk_confirmed') {
+      if (onSuccess) (props.onSuccess || (() => {}))(value);
+      onCloseModal();
+    }
+  };
+
   useEffect(() => {
-    window.addEventListener('message', (e: any) => {
-      const { type, value } = e.data || e.message;
-      if (type === 'cometsdk_contentHeight') {
-        setIframeHeight(value);
-      } else if (type === 'cometsdk_confirmed') {
-        if (onSuccess) (props.onSuccess || (() => {}))(value);
-        onCloseModal();
-      }
-    });
+    window.removeEventListener('message', messageHandler);
+    window.addEventListener('message', messageHandler);
   }, []);
 
   const onCloseModal = () => {

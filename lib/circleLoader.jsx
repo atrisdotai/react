@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { classnames } from 'tailwindcss-classnames';
 
 export default function CircleLoader(props) {

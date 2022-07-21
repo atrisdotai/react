@@ -1,6 +1,6 @@
 {
   "name": "@comet-labs/react",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Made with create-react-library",
   "author": "aniiyengar",
   "license": "ISC",
@@ -11,6 +11,7 @@
   "engines": {
     "node": ">=10"
   },
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "NODE_ENV=publish npx tsc --outDir dist --declarationDir dist --declaration true && rollup -c",
     "prepare": "run-s build",

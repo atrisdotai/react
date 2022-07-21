@@ -68,6 +68,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.6.6",
+    "query-string": "^7.1.1",
     "tailwindcss-classnames": "^3.0.5"
   }
 }

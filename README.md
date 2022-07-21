@@ -24,9 +24,6 @@ yarn add @comet-labs/react
 import React from 'react';
 import { CometButton } from '@comet-labs/react';
 
-// Import CSS to apply styles
-import '@comet-labs/react/dist/index.css';
-
 export default function MyApp(props) {
   // Login handler
   const loginHandler = (result) => {

@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { classnames } from 'tailwindcss-classnames';
+import classnames from 'classnames';
 
-export default function CircleLoader(props) {
+export default function CircleLoader(props: any) {
   const { size, className } = props;
 
   return (

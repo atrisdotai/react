@@ -1,2 +1,2 @@
 
-export { default as CometButton } from "./CometButton";
+export { default as CometButton } from './CometButton';

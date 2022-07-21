@@ -1,9 +1,9 @@
 
 import React from 'react';
 import { Dialog, Transition } from '@headlessui/react'
-import { classnames } from 'tailwindcss-classnames';
+import classnames from 'classnames';
 
-function Modal(props) {
+function Modal(props: any) {
   const {
     open,
     onClose,

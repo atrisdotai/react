@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { classnames } from 'tailwindcss-classnames';
+import classnames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CircleLoader from './circleLoader';
 
-export default function Button(props) {
+export default function Button(props: any) {
   const {
     variant = 'primary', // primary, secondary
     size = 'base',

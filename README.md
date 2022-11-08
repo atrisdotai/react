@@ -2,7 +2,7 @@
 
 ## About
 
-Integrate [Comet](https://withcomet.com)'s Instant Wallet into your React app in 1 line of code.
+Integrate [Comet](https://withcomet.com)'s Instant Wallet and Minting functionality into your React app in 1 line of code.
 
 **Note: This is a very early release of Comet's React library and APIs are subject to change.**
 
@@ -18,7 +18,7 @@ npm install --save @comet-labs/react
 yarn add @comet-labs/react
 ```
 
-## Usage
+## Login with Comet
 
 ```javascript
 import React from 'react';
@@ -41,6 +41,44 @@ export default function MyApp(props) {
 }
 ```
 
+## Comet Gallery
+
+```javascript
+import React from 'react';
+import { CometButton } from '@comet-labs/react';
+
+export default function MyApp(props) {
+  return (
+    ...
+    <CometButton
+      action="gallery"
+    />
+    ...
+  );
+}
+```
+
+## Mint with Comet
+
+Contact us to launch a new NFT and get its `tokenId`. Supports free mints
+and paid mints using Stripe as an onramp.
+
+```javascript
+import React from 'react';
+import { CometButton } from '@comet-labs/react';
+
+export default function MyApp(props) {
+  return (
+    ...
+    <CometButton
+      action="mint"
+      tokenId="<tokenid>"
+    />
+    ...
+  );
+}
+```
+
 ### API
 `CometButton` accepts the following props:
 
@@ -57,7 +95,3 @@ By default, Comet generates a wallet on **Solana mainnet**. To generate wallets 
 | --- | --- | --- |
 | Solana mainnet | `solana` | 101 |
 | Solana devnet | `solana` | 103 |
-| Ethereum mainnet | `evm` | 1 |
-| Rinkeby testnet | `evm` | 4 |
-| Polygon mainnet | `evm` | 137 |
-| Mumbai testnet | `evm` | 80001 |

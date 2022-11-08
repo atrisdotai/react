@@ -1,6 +1,6 @@
 {
   "name": "@comet-labs/react",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Made with create-react-library",
   "author": "aniiyengar",
   "license": "ISC",
@@ -13,7 +13,8 @@
   },
   "typings": "dist/index.d.ts",
   "scripts": {
-    "build": "NODE_ENV=publish npx tsc --outDir dist --declarationDir dist --declaration true && rollup -c",
+    "build": "NODE_ENV=publish npx tsc --outDir dist --declarationDir dist --declaration true && rollup -c && echo 'BUILD FINISHED'",
+    "watch": "npx onchange ./src/* -- npm run build",
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
@@ -77,6 +78,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.6.6",
-    "classnames": "^2.3.1"
+    "classnames": "^2.3.1",
+    "query-string": "^7.1.1"
   }
 }

@@ -28,6 +28,6 @@ export default {
     commonjs(),
     typescript({ tsconfig: './tsconfig.json' }),
     postcss(),
-    terser()
+    terser(),
   ]
 }

@@ -34,7 +34,7 @@ export default function MyApp(props) {
     ...
     <CometButton
       action="login"
-      onSuccess={loginHandler}
+      onLoginthis ={loginHandler}
     />
     ...
   );
@@ -85,7 +85,7 @@ export default function MyApp(props) {
 | Prop | Required | Description |
 | --- | --- | --- |
 | `action` | :heavy_check_mark: | The action that occurs when the button is clicked. Currently the only accepted action is `login`. |
-| `onSuccess` | :heavy_check_mark: | Handler function after the login is done. Contains fields for the user's `id`, `username`, and data about their `address`. |
+| `onLogin` | :heavy_check_mark: | Handler function after the login is done. Contains fields for the user's `id`, `username`, and data about their `address`. |
 | `chainType`, `chainId` | | Specify `chainType` and `chainId` to specify which blockchain to login with. The currently available `chainType`s and `chainId`s are listed below. |
 
 ### Supported chains

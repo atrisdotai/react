@@ -51,6 +51,7 @@ export interface CometButtonProps {
   baseUrl?: String,
   tokenId?: String,
   env?: 'prod' | 'dev',
+  text?: String,
 };
 
 interface CometMintState {
@@ -91,6 +92,7 @@ export default (props: CometButtonProps) => {
     onLogin,
     onLogout,
     env = 'prod',
+    text,
   } = props;
 
   if (!chainType) {
@@ -177,7 +179,7 @@ export default (props: CometButtonProps) => {
     path = 'getwallet';
     query.nonce = nonce;
     buttonContent = (
-      'Login with Comet'
+      text || 'Login with Comet'
     )
   } else if (action === 'mint') {
     path = 'mint';
@@ -270,7 +272,7 @@ export default (props: CometButtonProps) => {
     }
   } else if (action === 'gallery') {
     path = 'gallery';
-    buttonContent = user ? `@${user.username}` : 'Login with Comet';
+    buttonContent = user ? `@${user.username}` : (text || 'Login with Comet');
   }
 
   return (

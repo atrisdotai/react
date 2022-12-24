@@ -1,9 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
-import Button from '../../ui/button';
-import CircleLoader from '../../ui/circleLoader';
-import Modal from '../../ui/modal';
-// import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Button from '../ui/button';
+import CircleLoader from '../ui/circleLoader';
+import Modal from '../ui/modal';
 import qs from 'query-string';
 
 const UID_CHARS = 'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890';

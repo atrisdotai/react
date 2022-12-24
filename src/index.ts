@@ -1,4 +1,5 @@
 
 import './index.css';
 
-export * from './components';
+export { default as CometButton } from './components/CometButton';
+export { default as CometProvider } from './components/CometProvider';

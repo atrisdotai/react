@@ -10,7 +10,10 @@ const useModal = () => {
   }
 
   return {
-    openModal: context.openModal,
+    openModal: () => {
+      // opens the iframe
+      context.openModal();
+    },
     closeModal: context.closeModal,
   };
 }

@@ -6,10 +6,13 @@ const useAccount = () => {
   const context = React.useContext(CometContext);
 
   if (context === undefined) {
-    throw new Error('useModal must be used within a CometProvider');
+    throw new Error('useAccount must be used within a CometProvider');
   }
 
-  return context.user;
+  return React.useMemo(
+    () => context.user,
+    [context.user?.id],
+  );
 }
 
 export default useAccount;

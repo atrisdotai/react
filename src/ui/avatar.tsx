@@ -10,7 +10,7 @@ export default function Avatar(props: any) {
   }
 
   return (
-    <div className={"overflow-hidden rounded-full p-1.5 bg-slate-900 " + className} style={{ width, height: width }}>
+    <div className={"overflow-hidden rounded-full p-1 bg-slate-900 " + className} style={{ width, height: width }}>
       <Identicon string={user.id} size={width - 12} />
     </div>
   )

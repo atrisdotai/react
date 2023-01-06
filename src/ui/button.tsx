@@ -35,7 +35,6 @@ export default function Button(props: any) {
 
   return (
     <button
-      type="button"
       className={classnames(
         'transition-opacity duration-100 disabled:opacity-60 inline-flex items-center border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500',
         {

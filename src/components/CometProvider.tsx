@@ -36,6 +36,7 @@ interface CometProviderConfig {
 
 export enum CometModalRequestType {
   SignMessage = 'signmessage',
+  ECDH = 'ecdh',
 }
 
 export interface CometModalRequest {

@@ -2,8 +2,13 @@
 import React from 'react';
 import Deferred from '../core/deferred';
 import { CometContext, CometModalRequestType } from '../components/CometProvider';
+import { Buffer } from 'buffer';
 
-const useSignMessage = (message: Buffer) => {
+const useSignMessage = ({
+  message,
+}: {
+  message: string | Buffer | Uint8Array;
+}) => {
   const context = React.useContext(CometContext);
   const signatureDeferred = React.useRef<Deferred<Uint8Array>>(new Deferred());
 
@@ -26,10 +31,20 @@ const useSignMessage = (message: Buffer) => {
       const element = (event.source as Window);
 
       if (element) {
+        let messageBuffer;
+
+        if (typeof message === 'string') {
+          messageBuffer = Buffer.from(message, 'utf8');
+        } else if (message instanceof Buffer) {
+          messageBuffer = message;
+        } else if (message instanceof Uint8Array) {
+          messageBuffer = Buffer.from(message);
+        }
+
         element.postMessage({
           type: 'cometsdk_startSignMessage',
           value: {
-            message: message,
+            message: messageBuffer?.toString('hex'),
             title: document.title,
           },
         }, '*');

@@ -49,7 +49,7 @@ export interface CometButtonProps {
   chainType?: CometChainType,
   chainId?: number,
   baseUrl?: String,
-  tokenId?: String,
+  collectionId?: String,
   env?: 'prod' | 'dev',
   text?: String,
 };
@@ -145,7 +145,7 @@ export default (props: CometButtonProps) => {
 
         const apiBaseUrl = `https://api${env === 'prod' ? '' : '-dev'}.withcomet.com/comet`;
         // setTokenDef(await fetch(apiBaseUrl));
-        const x = await fetch(apiBaseUrl + '/token/definition/' + props.tokenId);
+        const x = await fetch(apiBaseUrl + '/token/definition/' + props.collectionId);
         setTokenDef(await x.json());
         setTokenDefRequestOut(false);
       }
@@ -183,7 +183,7 @@ export default (props: CometButtonProps) => {
     )
   } else if (action === 'mint') {
     path = 'mint';
-    query.token = props.tokenId;
+    query.token = props.collectionId;
 
     buttonContent = (
       <span className='-mt-0.5'>
@@ -322,7 +322,7 @@ export default (props: CometButtonProps) => {
           <iframe
             className='hidden'
             allow='payment'
-            src={`${props.baseUrl || 'https://auth.withcomet.com'}/mintstate?nosize=1&token=${props.tokenId}&chainType=${chainType}&chainId=${chainId}`}
+            src={`${props.baseUrl || 'https://auth.withcomet.com'}/mintstate?nosize=1&token=${props.collectionId}&chainType=${chainType}&chainId=${chainId}`}
           />
         )
       }

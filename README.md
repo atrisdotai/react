@@ -60,7 +60,7 @@ export default function MyApp(props) {
 
 ## Mint with Comet
 
-Contact us to launch a new NFT and get its `tokenId`. Supports free mints
+Contact us to launch a new NFT and get its `collectionId`. Supports free mints
 and paid mints using Stripe as an onramp.
 
 ```javascript
@@ -72,7 +72,7 @@ export default function MyApp(props) {
     ...
     <CometButton
       action="mint"
-      tokenId="<tokenid>"
+      collectionId="<collectionId>"
     />
     ...
   );

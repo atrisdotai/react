@@ -153,12 +153,11 @@ export default function CometProvider({
   ]);
 
   React.useEffect(() => {
-    if (modalRequest) {
-      postMessage(
-        'cometsdk_modalRequest',
-        modalRequest,
-      );
-    }
+    console.log(modalRequest)
+    postMessage(
+      'cometsdk_modalRequest',
+      modalRequest,
+    );
   }, [modalRequest]);
 
   return (

@@ -57,8 +57,8 @@ const useGetSharedSecret = ({
         ecdhDeferred.current.reject(new Error('User rejected shared secret request'));
       }
 
-      context.closeModal();
       context.setModalRequest(null);
+      context.closeModal();
     }
   };
 

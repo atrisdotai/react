@@ -1,15 +1,13 @@
 
 import * as React from 'react';
 import { postMessage } from '../core/iframe';
-// import { postMessage } from '../core/iframe';
-// import Modal from '../ui/modal';
-// import CircleLoader from '../ui/circleLoader';
 
 interface CometContextValue {
   user: any;
   openModal: () => void;
   closeModal: () => void;
   setModalRequest: (request: CometModalRequest | null) => void;
+  iframeLoaded: Boolean;
 };
 
 // default values in context
@@ -18,6 +16,7 @@ export const CometContext = React.createContext<CometContextValue>({
   openModal: () => {},
   closeModal: () => {},
   setModalRequest: () => {},
+  iframeLoaded: false,
 });
 
 interface CometProviderConfig {
@@ -37,6 +36,7 @@ interface CometProviderConfig {
 export enum CometModalRequestType {
   SignMessage = 'signmessage',
   ECDH = 'ecdh',
+  Mint = 'mint',
 }
 
 export interface CometModalRequest {
@@ -83,6 +83,10 @@ export default function CometProvider({
       'cometsdk_modalOpen',
       modalOpen,
     );
+
+    if (iframeLoaded && !modalOpen) {
+      setModalRequest(null);
+    }
   }, [modalOpen]);
 
   React.useEffect(() => {
@@ -106,6 +110,7 @@ export default function CometProvider({
       setUser(data.value);
     } else if (data.type === 'cometsdk_modalOpen') {
       setModalOpen(data.value);
+      // setModalRequest(null);
     } else if (data.type === 'cometsdk_closeModal') {
       setModalOpen(false);
     } else if (data.type === 'cometsdk_hello') {
@@ -153,7 +158,6 @@ export default function CometProvider({
   ]);
 
   React.useEffect(() => {
-    console.log(modalRequest)
     postMessage(
       'cometsdk_modalRequest',
       modalRequest,

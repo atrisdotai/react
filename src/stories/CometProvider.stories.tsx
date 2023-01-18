@@ -1,7 +1,7 @@
 
 import React from 'react';
 import type { Meta } from '@storybook/react';
-import { CometProvider, CometButton } from '..';
+import { CometProvider, MintButton } from '..';
 
 const meta: Meta<typeof CometProvider> = {
   title: 'CometProvider',
@@ -17,7 +17,7 @@ const Template = (args: any) => <CometProvider {...args} />;
 export const BasicLogin = Template.bind({});
 BasicLogin.args = {
   children: [
-    <CometButton />,
+    <MintButton collectionId='8bbf071c3d5b' />,
   ],
   config: {
     iframeBaseUrl: IFRAME_BASE_URL,

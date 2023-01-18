@@ -6,7 +6,7 @@ import Avatar from '../ui/avatar';
 
 import useAccount from '../hooks/useAccount';
 
-export default () => {
+export default function LoginButton() {
   const { openModal } = useModal();
 
   const account = useAccount();

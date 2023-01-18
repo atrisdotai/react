@@ -62,7 +62,6 @@ export default function Button(props: any) {
           'font-medium': selected === false,
         },
         className,
-        `rounded-${rounded}`,
       )}
       disabled={loading || rest.disabled || false}
       style={style}

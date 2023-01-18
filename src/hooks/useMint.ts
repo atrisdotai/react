@@ -67,6 +67,7 @@ const useMint = ({
 
   const messageHandler = (event: MessageEvent) => {
     if (event.data.type === 'cometsdk_mintState') {
+      console.log(JSON.stringify(event.data.value, null, 2))
       setMintState(event.data.value);
     }
   };
@@ -81,10 +82,16 @@ const useMint = ({
     context.openModal();
   }
 
+  const mintStatus = mintState?.mintData?.mintStatus || null;
+
   return {
+    /** @internal */
     collection: mintState?.collection,
+    /** @internal */
     mintData: mintState?.mintData,
+
     openMint,
+    mintStatus,
   };
 }
 

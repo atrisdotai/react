@@ -12,12 +12,17 @@ export default function MintButton({
   const { openMint } = useMint({ collectionId });
 
   const [collection, setCollection] = React.useState<any>(null);
+  const [collectionStats, setCollectionStats] = React.useState<any>(null);
 
   React.useEffect(() => {
     (async () => {
       const tokenDef = await fetch(`https://api.withcomet.com/comet/token/definition/${collectionId}`);
       const tokenDefJson = await tokenDef.json();
       setCollection(tokenDefJson);
+
+      const tokenStats = await fetch(`https://api.withcomet.com/comet/token/definition/${collectionId}/stats`);
+      const tokenStatsJson = await tokenStats.json();
+      setCollectionStats(tokenStatsJson);
     })();
   }, []);
 
@@ -53,16 +58,24 @@ export default function MintButton({
   buttonContent = (
     <div className="flex flex-col">
       <div
-        className='font-sans inline-block font-medium text-2xl w-32 text-left ml-4' style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+        className='font-sans inline-block font-bold text-xl w-32 text-left ml-4' style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
       >
         {topText}
       </div>
 
       <div
-        className='font-sans inline-block font-medium text-md -mt-1 w-32 text-left ml-4' style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+        className='font-sans inline-block font-medium text-md -mt-2 w-32 text-left ml-4' style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
       >
         {bottomText}
       </div>
+
+      {
+        collectionStats && (
+          <div className='font-sans inline-block font-medium text-sm w-32 text-left ml-4 text-slate-500' style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {collection?.metadata.config.maxSupply - collectionStats?.minted}/{collection?.metadata.config.maxSupply} left
+          </div>
+        )
+      }
     </div>
   )
 

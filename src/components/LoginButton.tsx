@@ -39,6 +39,7 @@ export default function LoginButton() {
       onClick={() => {
         openModal();
       }}
+      className='rounded-full'
     >
       {iconContent}
       {buttonContent}

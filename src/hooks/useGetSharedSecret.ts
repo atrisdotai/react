@@ -10,7 +10,7 @@ const useGetSharedSecret = ({
   publicKey: string | Buffer | Uint8Array;
 }) => {
   const context = React.useContext(CometContext);
-  const ecdhDeferred = React.useRef<Deferred<Uint8Array>>(new Deferred());
+  const ecdhDeferred = React.useRef<Deferred<Uint8Array> | null>(null);
 
   if (context === undefined) {
     throw new Error('useGetSharedSecret must be used within a CometProvider');
@@ -46,15 +46,17 @@ const useGetSharedSecret = ({
             publicKey: publicKeyString,
             title: document.title,
           },
-        }, '*');
+        }, context.iframeOrigin);
       }
     } else if (event.data.type === 'cometsdk_finishECDH') {
       const { success, sharedSecret } = event.data.value;
 
-      if (success) {
-        ecdhDeferred.current.resolve(sharedSecret);
-      } else {
-        ecdhDeferred.current.reject(new Error('User rejected shared secret request'));
+      if (ecdhDeferred.current) {
+        if (success) {
+          ecdhDeferred.current.resolve(sharedSecret);
+        } else {
+          ecdhDeferred.current.reject(new Error('User rejected shared secret request'));
+        }
       }
 
       context.setModalRequest(null);
@@ -63,6 +65,8 @@ const useGetSharedSecret = ({
   };
 
   const getSharedSecret = () => {
+    ecdhDeferred.current = new Deferred<Uint8Array>();
+
     context.setModalRequest({
       type: CometModalRequestType.ECDH,
       closeable: false,

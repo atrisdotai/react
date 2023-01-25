@@ -8,6 +8,8 @@ interface CometContextValue {
   closeModal: () => void;
   setModalRequest: (request: CometModalRequest | null) => void;
   iframeLoaded: Boolean;
+  iframeOrigin: string;
+  sendRpcRequest: (request: any) => Promise<any>;
 };
 
 // default values in context
@@ -17,9 +19,14 @@ export const CometContext = React.createContext<CometContextValue>({
   closeModal: () => {},
   setModalRequest: () => {},
   iframeLoaded: false,
+  iframeOrigin: '',
+  sendRpcRequest: () => Promise.resolve({ error: 'CometProvider not found.' }),
 });
 
 interface CometProviderConfig {
+  // publishable key, required
+  publishableKey: string;
+
   // self explanatory, the base url of the iframe
   iframeBaseUrl?: string;
 
@@ -35,6 +42,7 @@ interface CometProviderConfig {
 
 export enum CometModalRequestType {
   SignMessage = 'signmessage',
+  SignTransaction = 'signtransaction',
   ECDH = 'ecdh',
   Mint = 'mint',
 }
@@ -56,11 +64,17 @@ export default function CometProvider({
 }: React.PropsWithChildren<{ config?: CometProviderConfig }>) {
 
   const {
-    iframeBaseUrl = 'https://auth.withcomet.com',
+    iframeBaseUrl = 'https://sdk-iframe.withcomet.com',
     chainType = 'solana',
     chainId = 101,
     showFullWallet = true,
+    publishableKey,
   } = config || {};
+
+  const iframeUrl = new URL(iframeBaseUrl);
+  const origin = iframeUrl.origin;
+
+  if (!publishableKey) throw new Error('CometProvider: publishableKey is required.');
 
   const [modalOpen, setModalOpen] = React.useState<Boolean>(false);
   const [modalRequest, setModalRequest] = React.useState<CometModalRequest|null>(null);
@@ -82,6 +96,7 @@ export default function CometProvider({
     postMessage(
       'cometsdk_modalOpen',
       modalOpen,
+      origin,
     );
 
     if (iframeLoaded && !modalOpen) {
@@ -94,15 +109,44 @@ export default function CometProvider({
       postMessage(
         'cometsdk_modalOpen',
         true,
+        origin,
       );
     }
     if (modalRequest) {
       postMessage(
         'cometsdk_modalRequest',
         modalRequest,
+        origin,
       );
     }
   }, [iframeLoaded]);
+
+  const sendRpcRequest = (request: any) => {
+    const requestId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    postMessage(
+      'cometsdk_rpcRequest',
+      {
+        id: requestId,
+        request,
+      },
+      origin,
+    );
+
+    return new Promise((resolve, reject) => {
+      const handleRpcMessage = (event: any) => {
+        const { data } = event;
+        if (data.type === 'cometsdk_rpcResponse' && data.value.id === requestId) {
+          window.removeEventListener('message', handleRpcMessage, false);
+          if (data.error) {
+            reject(data.value.error);
+          } else {
+            resolve(data.value.response);
+          }
+        }
+      };
+      window.addEventListener('message', handleRpcMessage, false);
+    });
+  };
 
   const handleMessage = React.useCallback((event: any) => {
     const { data } = event;
@@ -116,13 +160,15 @@ export default function CometProvider({
     } else if (data.type === 'cometsdk_hello') {
       setIframeLoaded(true);
       postMessage(
-        'cometsdk_hello',
+        'cometsdk_helloBack',
         {
           chainType,
           chainId,
           path: showFullWallet ? 'loginfull' : 'loginbasic',
+          publishableKey,
           query: {},
         },
+        origin,
       );
     }
   }, []);
@@ -134,6 +180,7 @@ export default function CometProvider({
         if (iframeLoaded) postMessage(
           'cometsdk_modalOpen',
           true,
+          origin,
         );
         setModalOpen(true);
       },
@@ -141,6 +188,7 @@ export default function CometProvider({
         if (iframeLoaded) postMessage(
           'cometsdk_modalOpen',
           false,
+          origin,
         );
         setModalRequest(null);
         setModalOpen(false);
@@ -149,6 +197,8 @@ export default function CometProvider({
         setModalRequest(request);
       },
       iframeLoaded,
+      iframeOrigin: origin,
+      sendRpcRequest,
     };
   }, [
     user,
@@ -161,6 +211,7 @@ export default function CometProvider({
     postMessage(
       'cometsdk_modalRequest',
       modalRequest,
+      origin,
     );
   }, [modalRequest]);
 

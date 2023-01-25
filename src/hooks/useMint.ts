@@ -67,7 +67,6 @@ const useMint = ({
 
   const messageHandler = (event: MessageEvent) => {
     if (event.data.type === 'cometsdk_mintState') {
-      console.log(JSON.stringify(event.data.value, null, 2))
       setMintState(event.data.value);
     }
   };

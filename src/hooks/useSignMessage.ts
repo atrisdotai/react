@@ -10,7 +10,7 @@ const useSignMessage = ({
   message: string | Buffer | Uint8Array;
 }) => {
   const context = React.useContext(CometContext);
-  const signatureDeferred = React.useRef<Deferred<Uint8Array>>(new Deferred());
+  const signatureDeferred = React.useRef<Deferred<Uint8Array> | null>(null);
 
   if (context === undefined) {
     throw new Error('useSignMessage must be used within a CometProvider');
@@ -47,15 +47,17 @@ const useSignMessage = ({
             message: messageBuffer?.toString('hex'),
             title: document.title,
           },
-        }, '*');
+        }, context.iframeOrigin);
       }
     } else if (event.data.type === 'cometsdk_finishSignMessage') {
       const { success, signature } = event.data.value;
 
-      if (success) {
-        signatureDeferred.current.resolve(signature);
-      } else {
-        signatureDeferred.current.reject(new Error('User rejected signing message'));
+      if (signatureDeferred.current) {
+        if (success) {
+          signatureDeferred.current.resolve(signature);
+        } else {
+          signatureDeferred.current.reject(new Error('User rejected signing message'));
+        }
       }
 
       context.closeModal();
@@ -64,6 +66,8 @@ const useSignMessage = ({
   };
 
   const signMessage = () => {
+    signatureDeferred.current = new Deferred<Uint8Array>();
+
     context.setModalRequest({
       type: CometModalRequestType.SignMessage,
       closeable: false,

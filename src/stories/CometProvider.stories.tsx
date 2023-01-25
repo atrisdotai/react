@@ -21,5 +21,6 @@ BasicLogin.args = {
   ],
   config: {
     iframeBaseUrl: IFRAME_BASE_URL,
+    publishableKey: 'C99BHgUNx6COUQweV0DNKr1IIoor80mX',
   }
 };

@@ -85,9 +85,11 @@ export default function MintButton({
         openMint();
       }}
       variant="secondary"
+      className="bg-gradient-to-r from-slate-100 to-slate-300 hover:from-slate-300 hover:to-slate-300"
       style={{
         borderRadius: 15,
         height: 80,
+        // shadow
       }}
     >
       {imageContent}

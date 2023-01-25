@@ -9,3 +9,4 @@ export { default as useAccount } from './hooks/useAccount';
 export { default as useSignMessage } from './hooks/useSignMessage';
 export { default as useGetSharedSecret } from './hooks/useGetSharedSecret';
 export { default as useMint } from './hooks/useMint';
+export { default as useSignTransaction } from './hooks/useSignTransaction';

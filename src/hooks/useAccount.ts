@@ -2,6 +2,12 @@
 import React from 'react';
 import { CometContext } from '../components/CometProvider';
 
+interface CometAccount {
+  id: string;
+  username: string;
+  address: string;
+}
+
 const useAccount = () => {
   const context = React.useContext(CometContext);
 
@@ -9,7 +15,7 @@ const useAccount = () => {
     throw new Error('useAccount must be used within a CometProvider');
   }
 
-  return React.useMemo(
+  return React.useMemo<CometAccount | null>(
     () => context.user,
     [context.user?.id],
   );

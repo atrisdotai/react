@@ -89,7 +89,7 @@ const useMint = ({
     /** @internal */
     mintData: mintState?.mintData,
 
-    openMint,
+    startMint: openMint,
     mintStatus,
   };
 }

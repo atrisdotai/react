@@ -9,7 +9,7 @@ export default function MintButton({
 }: {
   collectionId: string;
 }) {
-  const { openMint } = useMint({ collectionId });
+  const { startMint } = useMint({ collectionId });
 
   const [collection, setCollection] = React.useState<any>(null);
   const [collectionStats, setCollectionStats] = React.useState<any>(null);
@@ -82,7 +82,7 @@ export default function MintButton({
   return (
     <Button
       onClick={() => {
-        openMint();
+        startMint();
       }}
       variant="secondary"
       className="bg-gradient-to-r from-slate-100 to-slate-300 hover:from-slate-300 hover:to-slate-300"

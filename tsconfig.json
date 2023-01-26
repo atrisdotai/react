@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     // "outDir": "dist",
-    "module": "esnext",
-    "lib": ["dom", "esnext"],
+    "module": "ESNext",
+    "lib": ["DOM", "ESNext"],
     "moduleResolution": "node",
     "jsx": "react",
     "sourceMap": true,
@@ -15,7 +15,11 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true,
+    "stripInternal": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

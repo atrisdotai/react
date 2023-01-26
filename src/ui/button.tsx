@@ -35,9 +35,8 @@ export default function Button(props: any) {
 
   return (
     <button
-      type="button"
       className={classnames(
-        'transition-opacity duration-100 disabled:opacity-60 inline-flex items-center border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500',
+        'transition-opacity duration-100 disabled:opacity-60 inline-flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500',
         {
           'text-white bg-slate-600 hover:bg-slate-700': variant === 'primary',
           'text-slate-700 bg-slate-200 hover:bg-slate-300': variant === 'secondary',
@@ -63,7 +62,6 @@ export default function Button(props: any) {
           'font-medium': selected === false,
         },
         className,
-        `rounded-${rounded}`,
       )}
       disabled={loading || rest.disabled || false}
       style={style}

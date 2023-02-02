@@ -220,6 +220,7 @@ export default function CometProvider({
       <iframe
         id='cometsdk_iframe'
         className={modalOpen ? 'w-screen min-h-screen fixed' : 'w-0 h-0 absolute'}
+        style={{ zIndex: 2147483647 }}
         src={iframeBaseUrl}
       />
 
